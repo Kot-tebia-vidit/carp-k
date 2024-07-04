@@ -1,4 +1,4 @@
-//подключение библиотек
+//РїРѕРґРєР»СЋС‡РµРЅРёРµ Р±РёР±Р»РёРѕС‚РµРє
 #include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@ using namespace std;
 using namespace System;
 using namespace System::IO;
 
-//обозначения кнопок
+//РѕР±РѕР·РЅР°С‡РµРЅРёСЏ РєРЅРѕРїРѕРє
 #define ENTER 13
 #define ESC 27
 #define UP 72
@@ -19,41 +19,41 @@ using namespace System::IO;
 #define HOME 71
 #define END 79
 
-char dan[9][55]= //тексты вопросов для меню
+char dan[9][55]= //С‚РµРєСЃС‚С‹ РІРѕРїСЂРѕСЃРѕРІ РґР»СЏ РјРµРЅСЋ
 {
-					"Список поставщиков                                    ", 
-					"Поставщики с объёмом поставки выше 100тыс. р          ", 
-					"Поставщик с наибольшим обьёмом поставок               ", 
-					"Последняя поставка                                    ", 
-					"Есть ли совпадение стоимости поставок об. и ст.мат    ",
-					"Все совпадение стоимости поставки об. и ст.мат.       ",
-					"Диаграмма                                             ", 
-					"Выход                                                 ",
+					"РЎРїРёСЃРѕРє РїРѕСЃС‚Р°РІС‰РёРєРѕРІ                                    ", 
+					"РџРѕСЃС‚Р°РІС‰РёРєРё СЃ РѕР±СЉС‘РјРѕРј РїРѕСЃС‚Р°РІРєРё РІС‹С€Рµ 100С‚С‹СЃ. СЂ          ", 
+					"РџРѕСЃС‚Р°РІС‰РёРє СЃ РЅР°РёР±РѕР»СЊС€РёРј РѕР±СЊС‘РјРѕРј РїРѕСЃС‚Р°РІРѕРє               ", 
+					"РџРѕСЃР»РµРґРЅСЏСЏ РїРѕСЃС‚Р°РІРєР°                                    ", 
+					"Р•СЃС‚СЊ Р»Рё СЃРѕРІРїР°РґРµРЅРёРµ СЃС‚РѕРёРјРѕСЃС‚Рё РїРѕСЃС‚Р°РІРѕРє РѕР±. Рё СЃС‚.РјР°С‚    ",
+					"Р’СЃРµ СЃРѕРІРїР°РґРµРЅРёРµ СЃС‚РѕРёРјРѕСЃС‚Рё РїРѕСЃС‚Р°РІРєРё РѕР±. Рё СЃС‚.РјР°С‚.       ",
+					"Р”РёР°РіСЂР°РјРјР°                                             ", 
+					"Р’С‹С…РѕРґ                                                 ",
 					"                                                      "
 };
-char BlankLine[ ]=  "                                                        "; //чёрная строка
+char BlankLine[ ]=  "                                                        "; //С‡С‘СЂРЅР°СЏ СЃС‚СЂРѕРєР°
 
 
 struct z 
 {
-	char name[30]; //фио поставщика
-	char vid[20];  //что поставляет(оборудование/стройматериалы)
-	long summa;    //объём поставки в рублях
-	long plata;    //зарплата поставщику
-	char data[11]; //дата поставки
+	char name[30]; //С„РёРѕ РїРѕСЃС‚Р°РІС‰РёРєР°
+	char vid[20];  //С‡С‚Рѕ РїРѕСЃС‚Р°РІР»СЏРµС‚(РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ/СЃС‚СЂРѕР№РјР°С‚РµСЂРёР°Р»С‹)
+	long summa;    //РѕР±СЉС‘Рј РїРѕСЃС‚Р°РІРєРё РІ СЂСѓР±Р»СЏС…
+	long plata;    //Р·Р°СЂРїР»Р°С‚Р° РїРѕСЃС‚Р°РІС‰РёРєСѓ
+	char data[11]; //РґР°С‚Р° РїРѕСЃС‚Р°РІРєРё
 };
-struct sp //шаблон двухстороннего списка
+struct sp //С€Р°Р±Р»РѕРЅ РґРІСѓС…СЃС‚РѕСЂРѕРЅРЅРµРіРѕ СЃРїРёСЃРєР°
 {
-	char fio[20];		//фио поставщика
-	char vid[40];		//что поставляет(оборудование/стройматериалы)
-	long summa;			//объём поставки в рублях
-	long plata;			//зарплата поставщику
-	struct sp* sled;	//указатель на следующий элемент
-	struct sp* pred;	//указатель на предыдущий элемент
+	char fio[20];		//С„РёРѕ РїРѕСЃС‚Р°РІС‰РёРєР°
+	char vid[40];		//С‡С‚Рѕ РїРѕСЃС‚Р°РІР»СЏРµС‚(РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ/СЃС‚СЂРѕР№РјР°С‚РµСЂРёР°Р»С‹)
+	long summa;			//РѕР±СЉС‘Рј РїРѕСЃС‚Р°РІРєРё РІ СЂСѓР±Р»СЏС…
+	long plata;			//Р·Р°СЂРїР»Р°С‚Р° РїРѕСЃС‚Р°РІС‰РёРєСѓ
+	struct sp* sled;	//СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
+	struct sp* pred;	//СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СЌР»РµРјРµРЅС‚
  } *spisok;
-struct sp* spisko; //обратный список
+struct sp* spisko; //РѕР±СЂР°С‚РЅС‹Р№ СЃРїРёСЃРѕРє
 
-//объявление функций
+//РѕР±СЉСЏРІР»РµРЅРёРµ С„СѓРЅРєС†РёР№
 int menu(int);
 void max(struct z*,int);
 void last(struct z*,int);
@@ -67,20 +67,20 @@ void listing(struct z*,int);
 void diagram(struct z*,int);
 void raar(char *s);
 
-int main(array<System::String ^> ^args)//Вывод менюшки, отурытие файла
+int main(array<System::String ^> ^args)//Р’С‹РІРѕРґ РјРµРЅСЋС€РєРё, РѕС‚СѓСЂС‹С‚РёРµ С„Р°Р№Р»Р°
 {
-	int i,n,NEN; //NEN - число поставщиков
-	FILE *in;	//Дискриптер
-	struct z *postavs;	//создаём структуру на основе шаблон
-	setlocale(LC_CTYPE,".1251");	//поддержка русского языка
-	Console::CursorVisible::set(false);	// делаем курсор невидимым
-	Console::BufferHeight=Console::WindowHeight;	//задаём высоту окна
-	Console::BufferWidth=Console::WindowWidth;	//задаём ширину окна
+	int i,n,NEN; //NEN - С‡РёСЃР»Рѕ РїРѕСЃС‚Р°РІС‰РёРєРѕРІ
+	FILE *in;	//Р”РёСЃРєСЂРёРїС‚РµСЂ
+	struct z *postavs;	//СЃРѕР·РґР°С‘Рј СЃС‚СЂСѓРєС‚СѓСЂСѓ РЅР° РѕСЃРЅРѕРІРµ С€Р°Р±Р»РѕРЅ
+	setlocale(LC_CTYPE,".1251");	//РїРѕРґРґРµСЂР¶РєР° СЂСѓСЃСЃРєРѕРіРѕ СЏР·С‹РєР°
+	Console::CursorVisible::set(false);	// РґРµР»Р°РµРј РєСѓСЂСЃРѕСЂ РЅРµРІРёРґРёРјС‹Рј
+	Console::BufferHeight=Console::WindowHeight;	//Р·Р°РґР°С‘Рј РІС‹СЃРѕС‚Сѓ РѕРєРЅР°
+	Console::BufferWidth=Console::WindowWidth;	//Р·Р°РґР°С‘Рј С€РёСЂРёРЅСѓ РѕРєРЅР°
 
-	//использование дескриптера
+	//РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РґРµСЃРєСЂРёРїС‚РµСЂР°
 	if((in=fopen("BD.txt","r"))==NULL)
 	{
-		printf("\nФайл BD.txt не найден!");	//выводим сообщение, если файл не открыт
+		printf("\nР¤Р°Р№Р» BD.txt РЅРµ РЅР°Р№РґРµРЅ!");	//РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ, РµСЃР»Рё С„Р°Р№Р» РЅРµ РѕС‚РєСЂС‹С‚
 		getch(); exit(1);
 	}
 	Console::ForegroundColor=ConsoleColor::Red;
@@ -88,7 +88,7 @@ int main(array<System::String ^> ^args)//Вывод менюшки, отурытие файла
 		Console::Clear();
 		Console::ForegroundColor=ConsoleColor::Black;
 		Console::BackgroundColor=ConsoleColor::Red;
-	//ввод данных из файла и печать 
+	//РІРІРѕРґ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р° Рё РїРµС‡Р°С‚СЊ 
 	fscanf(in,"%d",&NEN);
 	postavs=(struct z*)malloc(NEN*sizeof(struct z));
 	for(i=0;i<NEN;i++)
@@ -100,17 +100,17 @@ int main(array<System::String ^> ^args)//Вывод менюшки, отурытие файла
 		printf("\n%-20s %-20s %7ld %7ld %s", postavs[i].name, postavs[i].vid, postavs[i].summa, postavs[i].plata, postavs[i].data);
 	getch();
 
-	while(1)	//создаем область для вопросов и окрашиваем ее в цвета
+	while(1)	//СЃРѕР·РґР°РµРј РѕР±Р»Р°СЃС‚СЊ РґР»СЏ РІРѕРїСЂРѕСЃРѕРІ Рё РѕРєСЂР°С€РёРІР°РµРј РµРµ РІ С†РІРµС‚Р°
 	{
 		Console::ForegroundColor=ConsoleColor::Cyan;
 		Console::BackgroundColor=ConsoleColor::Blue;
 		Console::Clear();
 		Console::ForegroundColor=ConsoleColor::Black;
 		Console::BackgroundColor=ConsoleColor::Cyan;
-		Console::CursorLeft=10;	//координаты точки откуда будем закрашивать область меню
+		Console::CursorLeft=10;	//РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё РѕС‚РєСѓРґР° Р±СѓРґРµРј Р·Р°РєСЂР°С€РёРІР°С‚СЊ РѕР±Р»Р°СЃС‚СЊ РјРµРЅСЋ
 		Console::CursorTop=4;
 		printf(BlankLine);
-		for(i=0;i<9;i++)	//размещение вопросов
+		for(i=0;i<9;i++)	//СЂР°Р·РјРµС‰РµРЅРёРµ РІРѕРїСЂРѕСЃРѕРІ
 		{
 			Console::CursorLeft=10;
 			Console::CursorTop=i+5;
@@ -121,24 +121,24 @@ int main(array<System::String ^> ^args)//Вывод менюшки, отурытие файла
 		Console::CursorTop=12;
 		printf(BlankLine);
 
-		n=menu(8);	//связываем вопрос в меню с функцией
+		n=menu(8);	//СЃРІСЏР·С‹РІР°РµРј РІРѕРїСЂРѕСЃ РІ РјРµРЅСЋ СЃ С„СѓРЅРєС†РёРµР№
 		switch(n) 
 		{
-			case 1: alfalist(postavs,NEN); break;	//афавитный список
-			case 2: listing(postavs,NEN); break;	//поставки свыше 100тыс.р
-			case 3: max(postavs,NEN); break;		//максимальнвая поставка
-			case 4: last(postavs,NEN); break;		//последняя поставка
-			case 5: sovpad(postavs,NEN); break;		//первое совпадение
-			case 6: vsesovpad(postavs,NEN); break;	//все совпадения
-			case 7: diagram(postavs,NEN); break;	//диаграмма
-			case 8: exit(0);					//выход из программы
+			case 1: alfalist(postavs,NEN); break;	//Р°С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє
+			case 2: listing(postavs,NEN); break;	//РїРѕСЃС‚Р°РІРєРё СЃРІС‹С€Рµ 100С‚С‹СЃ.СЂ
+			case 3: max(postavs,NEN); break;		//РјР°РєСЃРёРјР°Р»СЊРЅРІР°СЏ РїРѕСЃС‚Р°РІРєР°
+			case 4: last(postavs,NEN); break;		//РїРѕСЃР»РµРґРЅСЏСЏ РїРѕСЃС‚Р°РІРєР°
+			case 5: sovpad(postavs,NEN); break;		//РїРµСЂРІРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
+			case 6: vsesovpad(postavs,NEN); break;	//РІСЃРµ СЃРѕРІРїР°РґРµРЅРёСЏ
+			case 7: diagram(postavs,NEN); break;	//РґРёР°РіСЂР°РјРјР°
+			case 8: exit(0);					//РІС‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹
 		}
-	}	 // конец while(1)...
+	}	 // РєРѕРЅРµС† while(1)...
 return 0;
-}		 // конец main()
+}		 // РєРѕРЅРµС† main()
 void raar(char *s)
 {
-	//Удаление нижнего подчёркивания в фио поставщиков
+	//РЈРґР°Р»РµРЅРёРµ РЅРёР¶РЅРµРіРѕ РїРѕРґС‡С‘СЂРєРёРІР°РЅРёСЏ РІ С„РёРѕ РїРѕСЃС‚Р°РІС‰РёРєРѕРІ
 	char *t;
 	t=strchr(s,'_');
     *t=' ';
@@ -150,40 +150,40 @@ int menu(int n)
 	char c=1;
 	while (c!=ESC)
 	{
-		switch(c) //управление стрелками и кнопкой ввода
+		switch(c) //СѓРїСЂР°РІР»РµРЅРёРµ СЃС‚СЂРµР»РєР°РјРё Рё РєРЅРѕРїРєРѕР№ РІРІРѕРґР°
 		{
 			case DOWN: y2=y1; y1++; break;
 			case UP: y2=y1; y1--; break;
 			case ENTER: return y1+1;
 		}
-		if(y1>n-1) //возвращение к первой кнопке если зашли ниже последней
+		if(y1>n-1) //РІРѕР·РІСЂР°С‰РµРЅРёРµ Рє РїРµСЂРІРѕР№ РєРЅРѕРїРєРµ РµСЃР»Рё Р·Р°С€Р»Рё РЅРёР¶Рµ РїРѕСЃР»РµРґРЅРµР№
 		{
 			y2=n-1;
 			y1=0;
 		}
-		if(y1<0)  //возвращение к последней кнопке если выше первой
+		if(y1<0)  //РІРѕР·РІСЂР°С‰РµРЅРёРµ Рє РїРѕСЃР»РµРґРЅРµР№ РєРЅРѕРїРєРµ РµСЃР»Рё РІС‹С€Рµ РїРµСЂРІРѕР№
 		{
 			y2=0;
 			y1=n-1;
 		}
-		//цвет подсветки текущей кнопки
+		//С†РІРµС‚ РїРѕРґСЃРІРµС‚РєРё С‚РµРєСѓС‰РµР№ РєРЅРѕРїРєРё
 		Console::ForegroundColor=ConsoleColor::White;
 		Console::BackgroundColor=ConsoleColor::Red;
-		Console::CursorLeft=11;		//место подсветки
+		Console::CursorLeft=11;		//РјРµСЃС‚Рѕ РїРѕРґСЃРІРµС‚РєРё
 		Console::CursorTop=y1+5;
-		printf("%s",dan[y1]);	//выводим текст вопроса еще раз
+		printf("%s",dan[y1]);	//РІС‹РІРѕРґРёРј С‚РµРєСЃС‚ РІРѕРїСЂРѕСЃР° РµС‰Рµ СЂР°Р·
 
-		Console::ForegroundColor=ConsoleColor::Black;	//убираем подстветку с предыдущей кнопки
+		Console::ForegroundColor=ConsoleColor::Black;	//СѓР±РёСЂР°РµРј РїРѕРґСЃС‚РІРµС‚РєСѓ СЃ РїСЂРµРґС‹РґСѓС‰РµР№ РєРЅРѕРїРєРё
 		Console::BackgroundColor=ConsoleColor::Cyan;
-		Console::CursorLeft=11;//место пропажи подсветки
+		Console::CursorLeft=11;//РјРµСЃС‚Рѕ РїСЂРѕРїР°Р¶Рё РїРѕРґСЃРІРµС‚РєРё
 		Console::CursorTop=y2+5;
 		printf("%s",dan[y2]);
 		c=getch();
-	} // конец while(c!=ESC)...
+	} // РєРѕРЅРµС† while(c!=ESC)...
 exit(0);
 }
 
-void max(struct z* postav,int NC) //функция для определения самой большой поставки
+void max(struct z* postav,int NC) //С„СѓРЅРєС†РёСЏ РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ СЃР°РјРѕР№ Р±РѕР»СЊС€РѕР№ РїРѕСЃС‚Р°РІРєРё
 {
 	int i=0; struct z best;
 	strcpy(best.name,postav[0].name);
@@ -194,90 +194,90 @@ void max(struct z* postav,int NC) //функция для определения самой большой постав
 			strcpy(best.name,postav[i].name);
 			best.summa=postav[i].summa;
 		}
-	Console::ForegroundColor=ConsoleColor::White; //цвет ответа
+	Console::ForegroundColor=ConsoleColor::White; //С†РІРµС‚ РѕС‚РІРµС‚Р°
 	Console::BackgroundColor=ConsoleColor::Blue;
-	Console::CursorLeft=10;//координаты ответа
+	Console::CursorLeft=10;//РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РІРµС‚Р°
 	Console::CursorTop=15;
-	printf("Поставщик %s поставил товара на %ldр",best.name,best.summa);
+	printf("РџРѕСЃС‚Р°РІС‰РёРє %s РїРѕСЃС‚Р°РІРёР» С‚РѕРІР°СЂР° РЅР° %ldСЂ",best.name,best.summa);
 	Console::CursorLeft=10;
 	Console::CursorTop=16;
 	getch();
 }
 
 
-void text_data(char *s,char *sd) //функция перевода даты из текста в символы
+void text_data(char *s,char *sd) //С„СѓРЅРєС†РёСЏ РїРµСЂРµРІРѕРґР° РґР°С‚С‹ РёР· С‚РµРєСЃС‚Р° РІ СЃРёРјРІРѕР»С‹
 {
 	char s0[3],month[12][9]={
-	"января","февраля","марта","апреля","мая","июня",
-	"июля","августа","сентября","октября","ноября","декабря"};
-	strcpy(s,sd+8);	//копируем день месяца
-	strcat(s," ");	//ставим пробел
-	strncpy(s0,sd+5,2); s0[2]=0;	//копируем номер месяца в строку s0
-	strcat(s,month[ atoi(s0)-1]);	//переводим номер месяца в текст и добавляем в строку
-	strcat(s," ");	//пробел
-	strncat(s,sd,4);	//год
+	"СЏРЅРІР°СЂСЏ","С„РµРІСЂР°Р»СЏ","РјР°СЂС‚Р°","Р°РїСЂРµР»СЏ","РјР°СЏ","РёСЋРЅСЏ",
+	"РёСЋР»СЏ","Р°РІРіСѓСЃС‚Р°","СЃРµРЅС‚СЏР±СЂСЏ","РѕРєС‚СЏР±СЂСЏ","РЅРѕСЏР±СЂСЏ","РґРµРєР°Р±СЂСЏ"};
+	strcpy(s,sd+8);	//РєРѕРїРёСЂСѓРµРј РґРµРЅСЊ РјРµСЃСЏС†Р°
+	strcat(s," ");	//СЃС‚Р°РІРёРј РїСЂРѕР±РµР»
+	strncpy(s0,sd+5,2); s0[2]=0;	//РєРѕРїРёСЂСѓРµРј РЅРѕРјРµСЂ РјРµСЃСЏС†Р° РІ СЃС‚СЂРѕРєСѓ s0
+	strcat(s,month[ atoi(s0)-1]);	//РїРµСЂРµРІРѕРґРёРј РЅРѕРјРµСЂ РјРµСЃСЏС†Р° РІ С‚РµРєСЃС‚ Рё РґРѕР±Р°РІР»СЏРµРј РІ СЃС‚СЂРѕРєСѓ
+	strcat(s," ");	//РїСЂРѕР±РµР»
+	strncat(s,sd,4);	//РіРѕРґ
 	return;
 }
 
-void last(struct z* postav,int NC)	//определение последней поставки
+void last(struct z* postav,int NC)	//РѕРїСЂРµРґРµР»РµРЅРёРµ РїРѕСЃР»РµРґРЅРµР№ РїРѕСЃС‚Р°РІРєРё
 {
 	int i;
-	char s[17];//дата поставки
-	struct z* best=postav;	//частный поставщик
-	for(i=1;i<NC;i++)	//ищем последнее число
+	char s[17];//РґР°С‚Р° РїРѕСЃС‚Р°РІРєРё
+	struct z* best=postav;	//С‡Р°СЃС‚РЅС‹Р№ РїРѕСЃС‚Р°РІС‰РёРє
+	for(i=1;i<NC;i++)	//РёС‰РµРј РїРѕСЃР»РµРґРЅРµРµ С‡РёСЃР»Рѕ
 		if (strcmp(postav[i].data,best->data)>0)
 			best=&postav[i];
-	text_data(s,best->data);	//переводим необходимую дату в текст
+	text_data(s,best->data);	//РїРµСЂРµРІРѕРґРёРј РЅРµРѕР±С…РѕРґРёРјСѓСЋ РґР°С‚Сѓ РІ С‚РµРєСЃС‚
 
-	Console::ForegroundColor=ConsoleColor::White;	//цвет ответа
+	Console::ForegroundColor=ConsoleColor::White;	//С†РІРµС‚ РѕС‚РІРµС‚Р°
 	Console::BackgroundColor=ConsoleColor::Blue;
-	Console::CursorLeft=10;	//координаты ответа
+	Console::CursorLeft=10;	//РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РІРµС‚Р°
 	Console::CursorTop=15;
 	Console::CursorLeft=10;
 	Console::CursorTop=16;
-	//вывод ответа
-	printf("Последнюю поставку совершил %s на %ldр  %s",best->name,best->summa,s);	
+	//РІС‹РІРѕРґ РѕС‚РІРµС‚Р°
+	printf("РџРѕСЃР»РµРґРЅСЋСЋ РїРѕСЃС‚Р°РІРєСѓ СЃРѕРІРµСЂС€РёР» %s РЅР° %ldСЂ  %s",best->name,best->summa,s);	
 	getch();
 }
 
 void sovpad(struct z* postav,int NC)	
-//сложный вопрос, вывод совпадения объёма рублей между 2 поставщиками с разными видами поставки
+//СЃР»РѕР¶РЅС‹Р№ РІРѕРїСЂРѕСЃ, РІС‹РІРѕРґ СЃРѕРІРїР°РґРµРЅРёСЏ РѕР±СЉС‘РјР° СЂСѓР±Р»РµР№ РјРµР¶РґСѓ 2 РїРѕСЃС‚Р°РІС‰РёРєР°РјРё СЃ СЂР°Р·РЅС‹РјРё РІРёРґР°РјРё РїРѕСЃС‚Р°РІРєРё
 {
 	int i,j,sum,t=0;
 	struct z* best=postav;
-	Console::ForegroundColor=ConsoleColor::White;	//цвет ответа
+	Console::ForegroundColor=ConsoleColor::White;	//С†РІРµС‚ РѕС‚РІРµС‚Р°
 	Console::BackgroundColor=ConsoleColor::Blue;
-	Console::CursorLeft=10;	//координаты ответа
+	Console::CursorLeft=10;	//РєРѕРѕСЂРґРёРЅР°С‚С‹ РѕС‚РІРµС‚Р°
 	Console::CursorTop=15;
 	Console::CursorLeft=10;
 	Console::CursorTop=16;
 
-	for(i=0;i<NC;i++)	//внешний цикл сравнения
+	for(i=0;i<NC;i++)	//РІРЅРµС€РЅРёР№ С†РёРєР» СЃСЂР°РІРЅРµРЅРёСЏ
 	{
-		best=&postav[i];	//первый поставщик для сравнения
-		sum=best->summa;	//объём поставки
-		for(j=(i+1);j<NC;j++)	//внутренний цикл
-		{	//сравнение 
+		best=&postav[i];	//РїРµСЂРІС‹Р№ РїРѕСЃС‚Р°РІС‰РёРє РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ
+		sum=best->summa;	//РѕР±СЉС‘Рј РїРѕСЃС‚Р°РІРєРё
+		for(j=(i+1);j<NC;j++)	//РІРЅСѓС‚СЂРµРЅРЅРёР№ С†РёРєР»
+		{	//СЃСЂР°РІРЅРµРЅРёРµ 
 			if ((sum==postav[j].summa) && (*best->vid != *postav[j].vid))	
 			{
-				t=1;	//флаговая перепенная при совпадении
-				//вывод совпадения
-				printf("\nСовпадение: %s и %s поставили товаров на %dр",postav[j].name,best->name,sum);
-				break;	//выход из внутреннего цикла
+				t=1;	//С„Р»Р°РіРѕРІР°СЏ РїРµСЂРµРїРµРЅРЅР°СЏ РїСЂРё СЃРѕРІРїР°РґРµРЅРёРё
+				//РІС‹РІРѕРґ СЃРѕРІРїР°РґРµРЅРёСЏ
+				printf("\nРЎРѕРІРїР°РґРµРЅРёРµ: %s Рё %s РїРѕСЃС‚Р°РІРёР»Рё С‚РѕРІР°СЂРѕРІ РЅР° %dСЂ",postav[j].name,best->name,sum);
+				break;	//РІС‹С…РѕРґ РёР· РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С†РёРєР»Р°
 			}
 		}
-		if(t==1)	//при совпадении
+		if(t==1)	//РїСЂРё СЃРѕРІРїР°РґРµРЅРёРё
 		{
-			break;	//выход из внутреннего цикла
+			break;	//РІС‹С…РѕРґ РёР· РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С†РёРєР»Р°
 		}
 	}
-	if (t==0)	//если нет совпадений
-		printf("\n Совпадений нет");
+	if (t==0)	//РµСЃР»Рё РЅРµС‚ СЃРѕРІРїР°РґРµРЅРёР№
+		printf("\n РЎРѕРІРїР°РґРµРЅРёР№ РЅРµС‚");
 	getch();
 }
 
 
-void vsesovpad(struct z* postav,int NC)	//вывод всех совпадений
+void vsesovpad(struct z* postav,int NC)	//РІС‹РІРѕРґ РІСЃРµС… СЃРѕРІРїР°РґРµРЅРёР№
 {
 	int i,j,sum,k=0,t,*num;
 	struct z* best=postav;
@@ -288,77 +288,77 @@ void vsesovpad(struct z* postav,int NC)	//вывод всех совпадений
 	Console::CursorLeft=10;
 	Console::CursorTop=15;
 	
-	for(j=i;j<NC;j++)	//обнуление проверенных поставщиков
+	for(j=i;j<NC;j++)	//РѕР±РЅСѓР»РµРЅРёРµ РїСЂРѕРІРµСЂРµРЅРЅС‹С… РїРѕСЃС‚Р°РІС‰РёРєРѕРІ
 		num[j]=0;
 
-	for(i=0;i<NC;i++)	//внешний цикл
+	for(i=0;i<NC;i++)	//РІРЅРµС€РЅРёР№ С†РёРєР»
 	{
 		best=&postav[i];
 		t=1;
 		sum=best->summa;
 		strcpy(str,best->name);
-		for(j=(i+1);j<NC;j++)	//внутренний цикл
-		{	//проверка на условия
+		for(j=(i+1);j<NC;j++)	//РІРЅСѓС‚СЂРµРЅРЅРёР№ С†РёРєР»
+		{	//РїСЂРѕРІРµСЂРєР° РЅР° СѓСЃР»РѕРІРёСЏ
 			if (sum==postav[j].summa && num[j]==0)
 			{
-				num[j]=1;	//фиксированние проверенного поставщиков
+				num[j]=1;	//С„РёРєСЃРёСЂРѕРІР°РЅРЅРёРµ РїСЂРѕРІРµСЂРµРЅРЅРѕРіРѕ РїРѕСЃС‚Р°РІС‰РёРєРѕРІ
 				if (*best->vid != *postav[j].vid)
 				{
 					t=t+1;
 				}
-				strcat(str,", ");	//вписывание в строку имён нужных постащиков
+				strcat(str,", ");	//РІРїРёСЃС‹РІР°РЅРёРµ РІ СЃС‚СЂРѕРєСѓ РёРјС‘РЅ РЅСѓР¶РЅС‹С… РїРѕСЃС‚Р°С‰РёРєРѕРІ
 				strcat(str,postav[j].name);
 			}
 		}
 		if (t>1)
-		{	//вывод
-			printf("\n%s поставили товаров на %dр",&str,sum);
+		{	//РІС‹РІРѕРґ
+			printf("\n%s РїРѕСЃС‚Р°РІРёР»Рё С‚РѕРІР°СЂРѕРІ РЅР° %dСЂ",&str,sum);
 			k++;
 		}
-	}	//всего совпадений
-	printf("\nВсего совпадений: %d",k);
+	}	//РІСЃРµРіРѕ СЃРѕРІРїР°РґРµРЅРёР№
+	printf("\nР’СЃРµРіРѕ СЃРѕРІРїР°РґРµРЅРёР№: %d",k);
 	getch();
 }
 
-void alfalist(struct z* postav,int NC)	//Функция вывода алфавитного списка и обратного алфавитного списка
+void alfalist(struct z* postav,int NC)	//Р¤СѓРЅРєС†РёСЏ РІС‹РІРѕРґР° Р°Р»С„Р°РІРёС‚РЅРѕРіРѕ СЃРїРёСЃРєР° Рё РѕР±СЂР°С‚РЅРѕРіРѕ Р°Р»С„Р°РІРёС‚РЅРѕРіРѕ СЃРїРёСЃРєР°
 {
 	int i;
-	struct sp* nt;	//указатели на соседние элементы списка
+	struct sp* nt;	//СѓРєР°Р·Р°С‚РµР»Рё РЅР° СЃРѕСЃРµРґРЅРёРµ СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
 	Console::ForegroundColor=ConsoleColor::Black;
 	Console::BackgroundColor=ConsoleColor::Cyan;
 	Console::Clear();
-	if(!spisok)	 //если алфавитный список ещё не создан, то создаём
+	if(!spisok)	 //РµСЃР»Рё Р°Р»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє РµС‰С‘ РЅРµ СЃРѕР·РґР°РЅ, С‚Рѕ СЃРѕР·РґР°С‘Рј
 		for(i=0;i<NC;i++)
-			vstavka(postav,postav[i].name,NC);	//вызываем функцию для каждого элемента
-	if(!spisko)	//если обратный список ещё не создан, то создаём
+			vstavka(postav,postav[i].name,NC);	//РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+	if(!spisko)	//РµСЃР»Рё РѕР±СЂР°С‚РЅС‹Р№ СЃРїРёСЃРѕРє РµС‰С‘ РЅРµ СЃРѕР·РґР°РЅ, С‚Рѕ СЃРѕР·РґР°С‘Рј
 		for(i=0;i<NC;i++)
-			vstavkao(postav,postav[i].name,NC);	//вызываем функцию для каждого элемента
+			vstavkao(postav,postav[i].name,NC);	//РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 	Console::Clear();
-	printf("\n Алфавитный список поставщиков              Обратный список ");
+	printf("\n РђР»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє РїРѕСЃС‚Р°РІС‰РёРєРѕРІ              РћР±СЂР°С‚РЅС‹Р№ СЃРїРёСЃРѕРє ");
 	printf("\n =============================              ================\n");
-	printf("\n ФИО:                 На сумму:             ФИО:                 На сумму:\n");
-	//выводим 2 списка
+	printf("\n Р¤РРћ:                 РќР° СЃСѓРјРјСѓ:             Р¤РРћ:                 РќР° СЃСѓРјРјСѓ:\n");
+	//РІС‹РІРѕРґРёРј 2 СЃРїРёСЃРєР°
 	for(nt=spisok; nt!=0; nt=nt->sled)
-		printf("\n\r %-20s %ldр",nt->fio,nt->summa);
+		printf("\n\r %-20s %ldСЂ",nt->fio,nt->summa);
 	Console::CursorTop = 6;
 	for(nt=spisko; nt!=0; nt=nt->sled) {
 		Console::CursorLeft = 44;
-		printf("%-20s %ldр \n",nt->fio,nt->summa);
+		printf("%-20s %ldСЂ \n",nt->fio,nt->summa);
 	}
 	getch();
 }
 
-void vstavka(struct z* postav,char* fio,int NC)	//фукнция добавления элемента в алфавитный список
+void vstavka(struct z* postav,char* fio,int NC)	//С„СѓРєРЅС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІ Р°Р»С„Р°РІРёС‚РЅС‹Р№ СЃРїРёСЃРѕРє
 {
 	int i;
-	struct sp *nov,*nt,*z=0;	//указатель на новый элемент и соседние
-	//ищем место, куда вставить новый элемент
+	struct sp *nov,*nt,*z=0;	//СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё СЃРѕСЃРµРґРЅРёРµ
+	//РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
 	for(nt=spisok; nt!=0 && strcmp(nt->fio,fio)<0; z=nt, nt=nt->sled);	
-		if(nt && strcmp(nt->fio,fio)==0) //если такой элемент уже есть то не добавляем
+		if(nt && strcmp(nt->fio,fio)==0) //РµСЃР»Рё С‚Р°РєРѕР№ СЌР»РµРјРµРЅС‚ СѓР¶Рµ РµСЃС‚СЊ С‚Рѕ РЅРµ РґРѕР±Р°РІР»СЏРµРј
 			return;
-	nov=(struct sp *) malloc(sizeof(struct sp));	//выделяем память под новый элемент
-	strcpy(nov->fio,fio);	//копируем данные в новый элемент
-	nov->sled=nt;	 //задаём ссылки на соседние элементы
+	nov=(struct sp *) malloc(sizeof(struct sp));	//РІС‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РїРѕРґ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
+	strcpy(nov->fio,fio);	//РєРѕРїРёСЂСѓРµРј РґР°РЅРЅС‹Рµ РІ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
+	nov->sled=nt;	 //Р·Р°РґР°С‘Рј СЃСЃС‹Р»РєРё РЅР° СЃРѕСЃРµРґРЅРёРµ СЌР»РµРјРµРЅС‚С‹
 	nov->summa=0;
 	for(i=0;i<NC;i++)
 		if(strcmp(postav[i].name,fio)==0)
@@ -369,17 +369,17 @@ void vstavka(struct z* postav,char* fio,int NC)	//фукнция добавления элемента в 
 	return;
 }
 
-void vstavkao(struct z* postav,char* fio,int NC)	//фукнция добавления элемента в обратный список
+void vstavkao(struct z* postav,char* fio,int NC)	//С„СѓРєРЅС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІ РѕР±СЂР°С‚РЅС‹Р№ СЃРїРёСЃРѕРє
 {
 	int i;
-	struct sp *nov,*nt,*z=0;	//указатель на новый элемент и соседние
-	//ищем место, куда вставить новый элемент
+	struct sp *nov,*nt,*z=0;	//СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё СЃРѕСЃРµРґРЅРёРµ
+	//РёС‰РµРј РјРµСЃС‚Рѕ, РєСѓРґР° РІСЃС‚Р°РІРёС‚СЊ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
 	for(nt=spisko; nt!=0 && strcmp(nt->fio,fio)>0; z=nt, nt=nt->sled);
-		if(nt && strcmp(nt->fio,fio)==0)  //если такой элемент уже есть то не добавляем
+		if(nt && strcmp(nt->fio,fio)==0)  //РµСЃР»Рё С‚Р°РєРѕР№ СЌР»РµРјРµРЅС‚ СѓР¶Рµ РµСЃС‚СЊ С‚Рѕ РЅРµ РґРѕР±Р°РІР»СЏРµРј
 			return;
-	nov=(struct sp *) malloc(sizeof(struct sp));	//выделяем память под новый элемент
-	strcpy(nov->fio,fio);	//копируем данные в новый элемент
-	nov->sled=nt;	 //задаём ссылки на соседние элементы
+	nov=(struct sp *) malloc(sizeof(struct sp));	//РІС‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РїРѕРґ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
+	strcpy(nov->fio,fio);	//РєРѕРїРёСЂСѓРµРј РґР°РЅРЅС‹Рµ РІ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
+	nov->sled=nt;	 //Р·Р°РґР°С‘Рј СЃСЃС‹Р»РєРё РЅР° СЃРѕСЃРµРґРЅРёРµ СЌР»РµРјРµРЅС‚С‹
 	nov->summa=0;
 	//nov->vid="";
 	for(i=0;i<NC;i++)
@@ -392,23 +392,23 @@ void vstavkao(struct z* postav,char* fio,int NC)	//фукнция добавления элемента в
 return;
 }
 
-void listing(struct z* postav,int NC)	//вывод списка поставок свыше 100тыс.р
+void listing(struct z* postav,int NC)	//РІС‹РІРѕРґ СЃРїРёСЃРєР° РїРѕСЃС‚Р°РІРѕРє СЃРІС‹С€Рµ 100С‚С‹СЃ.СЂ
 {
 	int i,f;
 	struct z* nt;
 	Console::ForegroundColor=ConsoleColor::Black;
 	Console::BackgroundColor=ConsoleColor::Cyan;
 	Console::Clear();
-	printf("\n\r Список поставщиков с объёмом товаров выше 100тыс.рублей");
+	printf("\n\r РЎРїРёСЃРѕРє РїРѕСЃС‚Р°РІС‰РёРєРѕРІ СЃ РѕР±СЉС‘РјРѕРј С‚РѕРІР°СЂРѕРІ РІС‹С€Рµ 100С‚С‹СЃ.СЂСѓР±Р»РµР№");
 	printf("\n\r=====================================================\n\r");
-	printf("\n ФИО:                 Вид поставки         Поставленно на сумму:\n");
-	for(i=0,nt=postav;i<NC;nt++,i++)	//подбираем необходимые поставки
+	printf("\n Р¤РРћ:                 Р’РёРґ РїРѕСЃС‚Р°РІРєРё         РџРѕСЃС‚Р°РІР»РµРЅРЅРѕ РЅР° СЃСѓРјРјСѓ:\n");
+	for(i=0,nt=postav;i<NC;nt++,i++)	//РїРѕРґР±РёСЂР°РµРј РЅРµРѕР±С…РѕРґРёРјС‹Рµ РїРѕСЃС‚Р°РІРєРё
 		if (nt->summa>100000)
-			printf("\n\r %-20s %-20s %ldр",nt->name,nt->vid,nt->summa);
+			printf("\n\r %-20s %-20s %ldСЂ",nt->name,nt->vid,nt->summa);
 	getch();
 }
 
-void diagram(struct z *postav,int NC)	//диаграмма по доле поставки от общего объёма
+void diagram(struct z *postav,int NC)	//РґРёР°РіСЂР°РјРјР° РїРѕ РґРѕР»Рµ РїРѕСЃС‚Р°РІРєРё РѕС‚ РѕР±С‰РµРіРѕ РѕР±СЉС‘РјР°
 {
 	struct sp *nt;
 	int len,i,NColor;
